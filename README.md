@@ -38,11 +38,13 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azu
 ```
 
 ### Install azure cli
+
 `# sudo yum install azure-cli`
 
 ## Install Openshift oc client
 
-`wget https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz`
+`# wget https://mirror.openshift.com/pub/openshift-v4/clients/oc/latest/linux/oc.tar.gz`
+
 `# tar -xvf oc.tar.gz`
 
 Copy the oc client into $PATH (yours may be different, you can see we need to create the directory here)
@@ -56,11 +58,12 @@ Copy the oc client into $PATH (yours may be different, you can see we need to cr
 ` # wget https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-install-linux.tar.gz`
 
 ` # tar -xvf openshift-install-linux.tar.gz`
+
 ` # sudo cp ./openshift-install ~/.local/bin`
 
 # Install jq
 
-(because it is handy for working with OCP and Azure)
+Because it is handy for working with OCP and Azure.
 
 `sudo yum install jq`
 
