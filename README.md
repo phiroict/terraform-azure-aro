@@ -70,5 +70,8 @@ Because it is handy for working with OCP and Azure.
 ## Follow this guide to prepare your azure client:
 https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-account.html#installation-azure-permissions_installing-azure-account
 
+## Prepare your install-config.yaml for openshift.
+`# wget https://github.com/thoward-rh/terraform-azure-ocp/blob/main/install-config.yaml`
+
 ###Questions?
 ###Why does it create a public IP for the cluster???
