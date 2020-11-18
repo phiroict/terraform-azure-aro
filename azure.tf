@@ -16,6 +16,7 @@ resource "azurerm_resource_group" "myterraformgroup" {
     }
 }
 
+
 # Create virtual network
 resource "azurerm_virtual_network" "myterraformnetwork" {
     name                = "myVnet"
@@ -55,8 +56,8 @@ resource "azurerm_subnet" "myWorkerSubnet" {
 ### Start Firewall
 
 # Create firewall subnet
-resource "azurerm_subnet" "myFirewallSubnet" {
-    name                 = "myFirewallSubnet"
+resource "azurerm_subnet" "AzureFirewallSubnet" {
+    name                 = "AzureFirewallSubnet"
     resource_group_name  = azurerm_resource_group.myterraformgroup.name
     virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
     address_prefixes       = ["10.0.10.0/24"]
@@ -82,7 +83,7 @@ resource "azurerm_firewall" "azure_firewall" {
   location = azurerm_resource_group.myterraformgroup.location
   ip_configuration {
     name = "hg-core-azure-firewall-config"
-    subnet_id = azurerm_subnet.myFirewallSubnet.id
+    subnet_id = azurerm_subnet.AzureFirewallSubnet.id
     public_ip_address_id = azurerm_public_ip.azure_firewall_pip.id
   }
  
@@ -119,7 +120,7 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
   }
 
       rule {
-    name = "Quay"
+    name = "Openshift.org"
     source_addresses = ["10.0.1.0/24"]
     target_fqdns = ["openshift.org"]
     protocol {
