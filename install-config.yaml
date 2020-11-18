@@ -1,0 +1,41 @@
+apiVersion: v1
+baseDomain: example.com
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+  name: worker
+  platform: {}
+  replicas: 3
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  platform: {}
+  replicas: 3
+metadata:
+  creationTimestamp: null
+  name: cluster1
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  azure:
+    baseDomainResourceGroupName: myResourceGroup 
+    networkResourceGroupName: myResourceGroup 
+    virtualNetwork: myVnet
+    controlPlaneSubnet: myControlPlaneSubnet
+    computeSubnet: myWorkerSubnet 
+    outboundType: UserDefinedRouting 
+    baseDomainResourceGroupName: <your base domain resource group>
+    cloudName: AzurePublicCloud
+    outboundType: Loadbalancer
+    region: southeastasia
+publish: Internal
+pullSecret: '{"auths": ...}' 
+sshKey: 'ssh-ed25519 AAAA...'
