@@ -28,12 +28,14 @@ After the install, create your private key and use it to access the Bastion host
 
 ### Prepare azure repo info
 
-`sudo sh -c 'echo -e "[azure-cli]
+```
+sudo sh -c 'echo -e "[azure-cli]
 name=Azure CLI
 baseurl=https://packages.microsoft.com/yumrepos/azure-cli
 enabled=1
 gpgcheck=1
 gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'`
+```
 
 ### Install azure cli
 `# sudo yum install azure-cli`
