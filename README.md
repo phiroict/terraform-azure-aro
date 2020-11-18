@@ -3,7 +3,7 @@ This code will first standup VNET, Bastion and firewall for the Azure Private ne
 
 This hat can be used to run openshift install for internal network.
 
-#Creating the infrastructure on Azure.
+# Creating the infrastructure on Azure.
 IMPORTANT: First ensure you are logged into the right Azure account.
 
 `# az login`
@@ -18,15 +18,15 @@ Run the plan
 
 After the install, create your private key and use it to access the Bastion host.
 
-#Configure Bastion host:
+# Configure Bastion host:
 
-##Install Azure Client
+## Install Azure Client
 
-###Add RPM
+### Add RPM
 
 `# sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc`
 
-###Prepare azure repo info
+### Prepare azure repo info
 
 ``` # sudo sh -c 'echo -e "[azure-cli]
 name=Azure CLI
