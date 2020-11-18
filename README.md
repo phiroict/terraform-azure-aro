@@ -1,6 +1,16 @@
 # terraform-azure-ocp
-This code will first standup VNET and firewall for the Azure Private network.
+This code will first standup VNET, Bastion and firewall for the Azure Private network.
 
-Then that can be used to run openshift install for internal network.
+This hat can be used to run openshift install for internal network.
+
+## Start by creating the infrastructure on Azure.
+First ensure you are logged into the right Azure account.
+```# az login```
+
+Initialise your terraform directory.
+```# terraform init```
+
+Run the plan
+```terraform plan```
 
 
