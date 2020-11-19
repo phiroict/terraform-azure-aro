@@ -34,7 +34,7 @@ name=Azure CLI
 baseurl=https://packages.microsoft.com/yumrepos/azure-cli
 enabled=1
 gpgcheck=1
-gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'`
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azure-cli.repo'
 ```
 
 ### Install azure cli
@@ -49,7 +49,7 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/azu
 
 Copy the oc client into $PATH (yours may be different, you can see we need to create the directory here)
 
-`# mkdir ~/.local/bin`
+`# mkdir -p ~/.local/bin`
 
 `# sudo cp ./oc ~/.local/bin`
 
@@ -65,13 +65,14 @@ Copy the oc client into $PATH (yours may be different, you can see we need to cr
 
 Because it is handy for working with OCP and Azure.
 
+`sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm`
+
 `sudo yum install jq`
 
 ## Follow this guide to prepare your azure client:
-https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-account.html#installation-azure-permissions_installing-azure-account
+https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-account.html
 
 ## Prepare your install-config.yaml for openshift.
+You can download the example from this repo into your working directory.
 `# wget https://github.com/thoward-rh/terraform-azure-ocp/blob/main/install-config.yaml`
-
-###Questions?
-###Why does it create a public IP for the cluster???
+Key items to edit are your base domain, pull secret (from cloud.openshift.com), and your ssh public key.

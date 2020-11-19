@@ -78,7 +78,7 @@ resource "azurerm_public_ip" "azure_firewall_pip" {
 # Create the Azure Firewall
 resource "azurerm_firewall" "azure_firewall" {
   depends_on=[azurerm_public_ip.azure_firewall_pip]
-  name = "azure-firewall"
+  name = "azure_firewall"
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   location = azurerm_resource_group.myterraformgroup.location
   ip_configuration {
@@ -101,7 +101,7 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
   action              = "Allow"
   rule {
     name = "Registry Red Hat"
-    source_addresses = ["10.0.1.0/24"]
+    source_addresses = ["10.0.0.0/16"]
     target_fqdns = ["registry.redhat.io"]
     protocol {
       port = "443"
@@ -111,8 +111,11 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
 
     rule {
     name = "Quay"
-    source_addresses = ["10.0.1.0/24"]
-    target_fqdns = ["quay.io"]
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = [
+      "quay.io",
+      "*.quay.io"
+      ]
     protocol {
       port = "443"
       type = "Https"
@@ -121,8 +124,8 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
 
       rule {
     name = "Openshift.org"
-    source_addresses = ["10.0.1.0/24"]
-    target_fqdns = ["openshift.org"]
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["openshift.org", "*.openshift.org"]
     protocol {
       port = "443"
       type = "Https"
@@ -178,6 +181,35 @@ resource "azurerm_firewall_network_rule_collection" "fw-net-azure-ad" {
 }
 
 ### End Firewall
+
+### Create route to firewall
+
+resource "azurerm_route_table" "firewall_routetable" {
+  depends_on=[azurerm_firewall.azure_firewall]
+  name                = "firewall_routetable"
+  location            = azurerm_resource_group.myterraformgroup.location
+  resource_group_name = azurerm_resource_group.myterraformgroup.name
+
+  route {
+    name                   = "internet"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = azurerm_firewall.azure_firewall.ip_configuration[0].private_ip_address
+  }
+}
+
+resource "azurerm_subnet_route_table_association" "route_control_plane" {
+  subnet_id      = azurerm_subnet.myControlPlaneSubnet.id
+  route_table_id = azurerm_route_table.firewall_routetable.id
+}
+
+resource "azurerm_subnet_route_table_association" "route_workers" {
+  subnet_id      = azurerm_subnet.myWorkerSubnet.id
+  route_table_id = azurerm_route_table.firewall_routetable.id
+}
+
+### End route to firewall
+
 
 # Create public IPs
 resource "azurerm_public_ip" "myterraformpublicip" {
