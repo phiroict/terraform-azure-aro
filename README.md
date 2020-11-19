@@ -16,7 +16,11 @@ Run the plan
 
 `# terraform plan`
 
-After the install, create your private key and use it to access the Bastion host.
+Apply to the infra
+
+`# terraform apply`
+
+After the install, create your private key and use it to access the Bastion host which was created in the terraform apply.
 
 # Configure Bastion host:
 
@@ -69,10 +73,14 @@ Because it is handy for working with OCP and Azure.
 
 `sudo yum install jq`
 
-## Follow this guide to prepare your azure client:
+# Follow this guide to prepare your azure client:
 https://docs.openshift.com/container-platform/latest/installing/installing_azure/installing-azure-account.html
 
-## Prepare your install-config.yaml for openshift.
+# Prepare your install-config.yaml for openshift.
 You can download the example from this repo into your working directory.
 `# wget https://github.com/thoward-rh/terraform-azure-ocp/blob/main/install-config.yaml`
 Key items to edit are your base domain, pull secret (from cloud.openshift.com), and your ssh public key.
+
+# Run the openshift installer
+I like to run with full debug on so I can see what is happening.
+`# openshift-install create cluster --dir . --log-level debug`
