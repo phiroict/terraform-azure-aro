@@ -22,6 +22,9 @@ Apply to the infra
 
 After the install, create your private key and use it to access the Bastion host which was created in the terraform apply.
 
+The result of applying the terraform will be the following:
+* 1 VNET and 3 subnets (mySubnet, myControlPlaneSubnet, myWorkerSubnet)
+
 # Configure Bastion host:
 
 ## Install the Azure client
