@@ -143,6 +143,18 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
     }
   }
 
+#Blob storage is used to get the ignition files. This needs to be made into a private link so this rule can be removed. It can actually be removed as soon as the bootstrap node starts.
+  rule {
+    name = "AzureBlob"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["*.blob.core.windows.net"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
+
 }
 
 # Create a Azure Firewall Network Rule for Azure Active Directoy

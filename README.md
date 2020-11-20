@@ -23,7 +23,12 @@ Apply to the infra
 After the install, create your private key and use it to access the Bastion host which was created in the terraform apply.
 
 The result of applying the terraform will be the following:
-* 1 VNET and 3 subnets (mySubnet, myControlPlaneSubnet, myWorkerSubnet)
+* 1 VNET and 4 subnets (mySubnet, myControlPlaneSubnet, myWorkerSubnet, AzureFirewallSubnet)
+* 1 firewall with static IP address
+* Firewall rules to allow internal subnets access to the addresses required to install OpenShift (ie quay.io)
+* 1 routing table which adds the worker and control plane subnets to default routing to the firewall.
+* 1 CentOS VM which we will use for Bastion, this also has a dynamic public IP address (may change to use firewall later)
+
 
 # Configure Bastion host:
 
@@ -87,3 +92,8 @@ Key items to edit are your base domain, pull secret (from cloud.openshift.com), 
 # Run the openshift installer
 I like to run with full debug on so I can see what is happening.
 `# openshift-install create cluster --dir . --log-level debug`
+
+
+# Things to do
+* Turn Bastion into a node to host registry, then block the red hat registry for nodes.
+* Ensure items such as blob are accessed as internal links, not external.
