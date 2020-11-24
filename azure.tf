@@ -132,11 +132,33 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
     }
   }
 
+
+      rule {
+    name = "openshift.com"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["api.openshift.com"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
   ## All IPs can get to management of Azure.
   rule {
     name = "Azure"
     source_addresses = ["10.0.0.0/16"]
     target_fqdns = ["management.azure.com"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
+    ## All IPs can get to management of Azure.
+  rule {
+    name = "LoginMicrosoft"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["login.microsoftonline.com"]
     protocol {
       port = "443"
       type = "Https"
