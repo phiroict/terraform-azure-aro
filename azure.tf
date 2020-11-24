@@ -110,6 +110,16 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
   }
 
     rule {
+    name = "Registry Red Hat Access"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["registry.access.redhat.com"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
+    rule {
     name = "Quay"
     source_addresses = ["10.0.0.0/16"]
     target_fqdns = [
