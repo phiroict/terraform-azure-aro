@@ -1,10 +1,10 @@
-# terraform-azure-ocp
+# terraform-azure-aro
 This code will first standup VNET, Bastion and firewall for the Azure Private network.
 
-This can be used to run openshift install for internal network.
+This can be used to run ARO install for internal network.
 
 # Creating the infrastructure on Azure.
-IMPORTANT: First ensure you are logged into the right Azure account.
+IMPORTANT: First ensure you are logged into the right Azure account with the right access.
 
 `# az login`
 
