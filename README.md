@@ -26,7 +26,7 @@ The result of applying the terraform will be the following:
 * 1 VNET and 4 subnets (mySubnet, myControlPlaneSubnet, myWorkerSubnet, AzureFirewallSubnet)
 * 1 firewall with static IP address
 * Firewall rules to allow internal subnets access to the addresses required to install OpenShift (ie quay.io)
-* 1 routing table which adds the worker and control plane subnets to default routing to the firewall.
+* 1 routing table which adds the worker and control plane subnets to default routing to the firewall. User Defined Routing (UDR)
 * 1 CentOS VM which we will use for Bastion, this also has a dynamic public IP address (may change to use firewall later)
 
 
