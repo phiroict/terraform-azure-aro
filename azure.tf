@@ -146,7 +146,27 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
       rule {
     name = "openshift.com"
     source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["api.openshift.com"]
+    target_fqdns = ["api.openshift.com", "infogw.api.openshift.com"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
+      rule {
+    name = "access.redhat.com"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["api.access.redhat.com", "cert-api.access.redhat.com"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
+      rule {
+    name = "sso.redhat.com"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["sso.redhat.com"]
     protocol {
       port = "443"
       type = "Https"
@@ -164,27 +184,49 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
     }
   }
 
-    ## All IPs can get to management of Azure.
+  ## All IPs can get to cloud.redhat.com.
   rule {
-    name = "LoginMicrosoft"
+    name = "RedHatCloud"
     source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["login.microsoftonline.com"]
+    target_fqdns = ["cloud.redhat.com"]
     protocol {
       port = "443"
       type = "Https"
     }
   }
 
-#Blob storage is used to get the ignition files. This needs to be made into a private link so this rule can be removed. It can actually be removed as soon as the bootstrap node starts.
+  ## All IPs can get to mirror.openshift.com.
   rule {
-    name = "AzureBlob"
+    name = "OpenShiftMirror"
     source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["*.blob.core.windows.net"]
+    target_fqdns = ["mirror.openshift.com"]
     protocol {
       port = "443"
       type = "Https"
     }
   }
+
+  #   ## All IPs can get to management of Azure.
+  # rule {
+  #   name = "LoginMicrosoft"
+  #   source_addresses = ["10.0.0.0/16"]
+  #   target_fqdns = ["login.microsoftonline.com"]
+  #   protocol {
+  #     port = "443"
+  #     type = "Https"
+  #   }
+  # }
+
+# #Blob storage is used to get the ignition files. This needs to be made into a private link so this rule can be removed. It can actually be removed as soon as the bootstrap node starts.
+#   rule {
+#     name = "AzureBlob"
+#     source_addresses = ["10.0.0.0/16"]
+#     target_fqdns = ["*.blob.core.windows.net"]
+#     protocol {
+#       port = "443"
+#       type = "Https"
+#     }
+#   }
 
 
 }
