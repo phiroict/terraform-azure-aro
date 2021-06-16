@@ -56,5 +56,5 @@ az aro create \
   --ingress-visibility Private
   # --domain foo.example.com # [OPTIONAL] custom domain
   # --pull-secret @pull-secret.txt # [OPTIONAL]
-
+  # don't forget to add "\" if you remove the comments.
 ```
