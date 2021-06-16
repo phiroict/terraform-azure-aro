@@ -34,9 +34,13 @@ The result of applying the terraform will be the following:
 
 ```bash
 
-LOCATION=eastus                 # the location of your cluster
-RESOURCEGROUP=aro-rg            # the name of the resource group where you want to create your cluster
+LOCATION=southeastasia                 # the location of your cluster
+RESOURCEGROUP=myResourceGroup            # the name of the resource group where you want to create your cluster
 CLUSTER=cluster                 # the name of your cluster
+VNET=myVnet
+SUBNETMASTER=myControlPlaneSubnet
+SUBNETWORKER=myWorkerSubnet
+
 ```
 
 # Create cluster
@@ -45,8 +49,12 @@ CLUSTER=cluster                 # the name of your cluster
 az aro create \
   --resource-group $RESOURCEGROUP \
   --name $CLUSTER \
-  --vnet aro-vnet \
-  --master-subnet master-subnet \
-  --worker-subnet worker-subnet
+  --vnet $VNET \
+  --master-subnet $SUBNETMASTER \
+  --worker-subnet $SUBNETWORKER \
+  --apiserver-visibility Private \
+  --ingress-visibility Private
+  # --domain foo.example.com # [OPTIONAL] custom domain
+  # --pull-secret @pull-secret.txt # [OPTIONAL]
 
 ```

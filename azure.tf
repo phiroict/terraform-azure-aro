@@ -43,6 +43,8 @@ resource "azurerm_subnet" "myControlPlaneSubnet" {
     resource_group_name  = azurerm_resource_group.myterraformgroup.name
     virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
     address_prefixes       = ["10.0.2.0/24"]
+    service_endpoints = ["Microsoft.ContainerRegistry"]
+    enforce_private_link_service_network_policies = true
 }
 
 # Create worker subnet
@@ -51,6 +53,7 @@ resource "azurerm_subnet" "myWorkerSubnet" {
     resource_group_name  = azurerm_resource_group.myterraformgroup.name
     virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
     address_prefixes       = ["10.0.3.0/24"]
+    service_endpoints = ["Microsoft.ContainerRegistry"]
 }
 
 ### Start Firewall
