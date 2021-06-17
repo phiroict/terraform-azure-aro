@@ -16,6 +16,11 @@ resource "azurerm_resource_group" "myterraformgroup" {
     }
 }
 
+resource "azurerm_private_dns_zone" "privatedomain" {
+  name                = "uluvus.private"
+  resource_group_name = azurerm_resource_group.myterraformgroup.name
+}
+
 
 # Create virtual network
 resource "azurerm_virtual_network" "myterraformnetwork" {

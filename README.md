@@ -53,8 +53,8 @@ az aro create \
   --master-subnet $SUBNETMASTER \
   --worker-subnet $SUBNETWORKER \
   --apiserver-visibility Private \
-  --ingress-visibility Private
-  # --domain foo.example.com # [OPTIONAL] custom domain
-  # --pull-secret @pull-secret.txt # [OPTIONAL]
+  --ingress-visibility Private \
+  --domain uluvus.private \
+  --pull-secret @pull-secret.txt
   # don't forget to add "\" if you remove the comments.
 ```
