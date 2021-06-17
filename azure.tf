@@ -209,27 +209,50 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
     }
   }
 
-  #   ## All IPs can get to management of Azure.
-  # rule {
-  #   name = "LoginMicrosoft"
-  #   source_addresses = ["10.0.0.0/16"]
-  #   target_fqdns = ["login.microsoftonline.com"]
-  #   protocol {
-  #     port = "443"
-  #     type = "Https"
-  #   }
-  # }
+  ## All IPs can get to mirror.openshift.com.
+  rule {
+    name = "AROSvc"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["arosvc.azurecr.io"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
 
-# #Blob storage is used to get the ignition files. This needs to be made into a private link so this rule can be removed. It can actually be removed as soon as the bootstrap node starts.
-#   rule {
-#     name = "AzureBlob"
-#     source_addresses = ["10.0.0.0/16"]
-#     target_fqdns = ["*.blob.core.windows.net"]
-#     protocol {
-#       port = "443"
-#       type = "Https"
-#     }
-#   }
+
+    ## All IPs can get to management of Azure.
+  rule {
+    name = "LoginMicrosoft"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["login.microsoftonline.com"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
+    ## Microsoft Geneva Monitoring.
+  rule {
+    name = "GenevaMonitor"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["gcs.prod.monitoring.core.windows.net", "*.servicebus.windows.net", "*.table.core.windows.net"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
+
+#Blob storage is used to get the ignition files. This needs to be made into a private link so this rule can be removed. It can actually be removed as soon as the bootstrap node starts.
+  rule {
+    name = "AzureBlob"
+    source_addresses = ["10.0.0.0/16"]
+    target_fqdns = ["*.blob.core.windows.net"]
+    protocol {
+      port = "443"
+      type = "Https"
+    }
+  }
 
 
 }
