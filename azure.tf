@@ -107,159 +107,41 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   priority            = 1001
   action              = "Allow"
-  rule {
-    name = "Registry Red Hat"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["registry.redhat.io"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-    rule {
-    name = "Registry Red Hat Access"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["registry.access.redhat.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-    rule {
-    name = "Quay"
+   rule {
+    name = "All The OCP URLs"
     source_addresses = ["10.0.0.0/16"]
     target_fqdns = [
       "quay.io",
-      "*.quay.io"
+      "*.quay.io",
+      "registry.redhat.io",
+      "registry.access.redhat.com",
+      "openshift.org",
+      "*.openshift.org",
+      "api.openshift.com",
+      "infogw.api.openshift.com",
+      "api.access.redhat.com",
+      "cert-api.access.redhat.com",
+      "sso.redhat.com",
+      "management.azure.com",
+      "cloud.redhat.com",
+      "mirror.openshift.com",
+      "mirror.openshift.com",
+      "arosvc.azurecr.io",
+      "login.microsoftonline.com",
+      "gcs.prod.monitoring.core.windows.net",
+      "*.servicebus.windows.net",
+      "*.table.core.windows.net",
+      "*.blob.core.windows.net"
+
+
+
       ]
     protocol {
       port = "443"
       type = "Https"
     }
   }
-
-      rule {
-    name = "Openshift.org"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["openshift.org", "*.openshift.org"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-
-      rule {
-    name = "openshift.com"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["api.openshift.com", "infogw.api.openshift.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-      rule {
-    name = "access.redhat.com"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["api.access.redhat.com", "cert-api.access.redhat.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-      rule {
-    name = "sso.redhat.com"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["sso.redhat.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-  ## All IPs can get to management of Azure.
-  rule {
-    name = "Azure"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["management.azure.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-  ## All IPs can get to cloud.redhat.com.
-  rule {
-    name = "RedHatCloud"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["cloud.redhat.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-  ## All IPs can get to mirror.openshift.com.
-  rule {
-    name = "OpenShiftMirror"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["mirror.openshift.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-  ## All IPs can get to mirror.openshift.com.
-  rule {
-    name = "AROSvc"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["arosvc.azurecr.io"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-
-    ## All IPs can get to management of Azure.
-  rule {
-    name = "LoginMicrosoft"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["login.microsoftonline.com"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-    ## Microsoft Geneva Monitoring.
-  rule {
-    name = "GenevaMonitor"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["gcs.prod.monitoring.core.windows.net", "*.servicebus.windows.net", "*.table.core.windows.net"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-#Blob storage is used to get the ignition files. This needs to be made into a private link so this rule can be removed. It can actually be removed as soon as the bootstrap node starts.
-  rule {
-    name = "AzureBlob"
-    source_addresses = ["10.0.0.0/16"]
-    target_fqdns = ["*.blob.core.windows.net"]
-    protocol {
-      port = "443"
-      type = "Https"
-    }
-  }
-
-
+ 
 }
 
 # Create a Azure Firewall Network Rule for Azure Active Directoy
@@ -278,7 +160,6 @@ resource "azurerm_firewall_network_rule_collection" "fw-net-azure-ad" {
     destination_addresses = ["168.63.129.16"]
     protocols = ["TCP","UDP"]
   }
-
     rule {
     name = "AzureMagicAgent2"
     source_addresses = ["10.0.0.0/16"]
@@ -294,7 +175,6 @@ resource "azurerm_firewall_network_rule_collection" "fw-net-azure-ad" {
     destination_addresses = ["168.63.129.16"]
     protocols = ["TCP","UDP"]
   }
-
 }
 
 ### End Firewall
