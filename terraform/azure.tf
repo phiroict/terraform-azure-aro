@@ -1,24 +1,35 @@
+terraform {
+  required_providers {
+    azurerm = {
+      version = "~>2.0"
+    }
+  }
+}
+
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
     # The "feature" block is required for AzureRM provider 2.x. 
     # If you're using version 1.x, the "features" block is not allowed.
-    version = "~>2.0"
     features {}
 }
 
 # Create a resource group if it doesn't exist
 resource "azurerm_resource_group" "myterraformgroup" {
-    name     = "myResourceGroup"
+    name     = var.resourcegroup_name
     location = "southeastasia"
 
-    tags = {
-        environment = "OCP Private Terraform Demo"
-    }
+    tags = merge(var.tags, {
+      Name="OCP Private Terraform Demo"
+      CreatedAt = formatdate("YYYY MM DD hh:mm ZZZ", timestamp())
+      ExpiresAt = timeadd(formatdate("YYYY MM DD hh:mm ZZZ", timestamp()), "240h")
+    } )
+
 }
 
 resource "azurerm_private_dns_zone" "privatedomain" {
   name                = "uluvus.private"
   resource_group_name = azurerm_resource_group.myterraformgroup.name
+  tags = var.tags
 }
 
 
@@ -29,9 +40,12 @@ resource "azurerm_virtual_network" "myterraformnetwork" {
     location            = azurerm_resource_group.myterraformgroup.location
     resource_group_name = azurerm_resource_group.myterraformgroup.name
 
-    tags = {
-        environment = "Terraform Demo"
-    }
+    tags = merge(var.tags, {
+      environment = "Terraform Demo"
+      CreatedAt = formatdate("YYYY MM DD hh:mm ZZZ", timestamp())
+      ExpiresAt = timeadd(formatdate("YYYY MM DD hh:mm ZZZ", timestamp()), "240h")
+      Name = "Openshift VNet"
+    } )
 }
 
 # Create subnet
@@ -40,6 +54,7 @@ resource "azurerm_subnet" "myterraformsubnet" {
     resource_group_name  = azurerm_resource_group.myterraformgroup.name
     virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
     address_prefixes       = ["10.0.1.0/24"]
+
 }
 
 # Create control plane subnet
@@ -47,7 +62,7 @@ resource "azurerm_subnet" "myControlPlaneSubnet" {
     name                 = "myControlPlaneSubnet"
     resource_group_name  = azurerm_resource_group.myterraformgroup.name
     virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-    address_prefixes       = ["10.0.2.0/24"]
+    address_prefixes       = [var.subnets_planes[0]]
     service_endpoints = ["Microsoft.ContainerRegistry"]
     enforce_private_link_service_network_policies = true
 }
@@ -57,7 +72,7 @@ resource "azurerm_subnet" "myWorkerSubnet" {
     name                 = "myWorkerSubnet"
     resource_group_name  = azurerm_resource_group.myterraformgroup.name
     virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-    address_prefixes       = ["10.0.3.0/24"]
+    address_prefixes       = [var.subnets_planes[1]]
     service_endpoints = ["Microsoft.ContainerRegistry"]
 }
 
@@ -68,7 +83,7 @@ resource "azurerm_subnet" "AzureFirewallSubnet" {
     name                 = "AzureFirewallSubnet"
     resource_group_name  = azurerm_resource_group.myterraformgroup.name
     virtual_network_name = azurerm_virtual_network.myterraformnetwork.name
-    address_prefixes       = ["10.0.10.0/24"]
+    address_prefixes       = [var.subnets_planes[2]]
 }
 
 # Create the public ip for Azure Firewall
@@ -78,9 +93,9 @@ resource "azurerm_public_ip" "azure_firewall_pip" {
   location = azurerm_resource_group.myterraformgroup.location
   allocation_method = "Static"
   sku = "Standard"
-  tags = {
+  tags = merge(var.tags, {
     environment = "Terraform Demo"
-  }
+  })
 }
 
 # Create the Azure Firewall
@@ -95,9 +110,9 @@ resource "azurerm_firewall" "azure_firewall" {
     public_ip_address_id = azurerm_public_ip.azure_firewall_pip.id
   }
  
-  tags = {
+  tags = merge(var.tags,{
     environment = "Terraform Demo"
-  }
+  })
 }
 
 # Create a Azure Firewall Application Rule for Red Hat Websites
@@ -109,7 +124,7 @@ resource "azurerm_firewall_application_rule_collection" "fw-app-tech-websites" {
   action              = "Allow"
    rule {
     name = "All The OCP URLs"
-    source_addresses = ["10.0.0.0/16"]
+    source_addresses = [var.traffic_source]
     target_fqdns = [
       "quay.io",
       "*.quay.io",
@@ -215,9 +230,9 @@ resource "azurerm_public_ip" "myterraformpublicip" {
     resource_group_name          = azurerm_resource_group.myterraformgroup.name
     allocation_method            = "Dynamic"
 
-    tags = {
+    tags = merge(var.tags,{
         environment = "Terraform Demo"
-    }
+    })
 }
 
 # Create Network Security Group and rule
@@ -238,9 +253,9 @@ resource "azurerm_network_security_group" "myterraformnsg" {
         destination_address_prefix = "*"
     }
 
-    tags = {
+    tags = merge(var.tags , {
         environment = "Terraform Demo"
-    }
+    })
 }
 
 # Create network interface
@@ -256,9 +271,9 @@ resource "azurerm_network_interface" "myterraformnic" {
         public_ip_address_id          = azurerm_public_ip.myterraformpublicip.id
     }
 
-    tags = {
+    tags = merge(var.tags,{
         environment = "Terraform Demo"
-    }
+    })
 }
 
 # Connect the security group to the network interface
@@ -285,9 +300,9 @@ resource "azurerm_storage_account" "mystorageaccount" {
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = {
+    tags = merge(var.tags,{
         environment = "Terraform Demo"
-    }
+    })
 }
 
 # Create (and display) an SSH key
@@ -331,7 +346,7 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
         storage_account_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
     }
 
-    tags = {
+    tags = merge(var.tags, {
         environment = "Terraform Demo"
-    }
+    })
 }
