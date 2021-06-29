@@ -1,7 +1,11 @@
 login:
 	az login
+init_az:
+	az provider register -n Microsoft.RedHatOpenShift --wait
 init:
 	cd infrastructure && terraform init
+delete_aro_cluster:
+	az aro delete --name aro_cluster --resource-group MyResourceGroup
 plan:
 	cd infrastructure && terraform plan -out openshift.plan
 apply:
