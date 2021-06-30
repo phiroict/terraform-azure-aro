@@ -69,6 +69,6 @@ variable "workerpane_subnet_name" {
 }
 
 variable "allowed_ingress_ipaddress" {
-  default = "151.210.134.56"
+  default = "151.210.139.77"
   type = string
 }
