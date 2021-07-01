@@ -1,6 +1,6 @@
 module "openshift-cluster-module" {
   source = "../terraform"
-
+  # source = "git@github.com:phiroict/terraform-azure-aro.git//terraform?ref=v1.0.0"
   # Params #############################################################################################################
   allowed_ingress_ipaddress = var.allowed_ingress_ipaddress
   controlpane_subnet_name = var.controlpane_subnet_name

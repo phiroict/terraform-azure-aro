@@ -177,6 +177,40 @@ Run the generated set this will return the configuration, for instance:
 
 ## Access the ARO stack 
 ### credentials
+The `make post_apply` tasks generates a file with commands to run to complete the installation
+`aro_creation_script_manual.txt`
+
+there are five lines in there, run these one by one and make note of the output of each one as you need it later on: 
+
+| line | what does it do | what does it deliver | Remarks |
+| --- | --- | --- |  --- |
+| 1 | Create the ARO cluster on azure | A json file with information what is created | Takes about 40 minutes to complete |
+| 2 | Lists the credentials for that cluster | Lists the credentials for that cluster | You need these to log in to the console |
+| 3 | Shows the url to place in the /etc/hosts file | url to navigate to | Need two lines in the /etc/hosts file see below | 
+| 4 | The ssh command to go to the bastion | Creates a port forward you can use to go to console | The SSL certificate is not trusted, just make an exception, the private key is also generated and should be there | 
+| 5 | Shows the ingress addresses to add in the /etc/hosts | Combine with the line 3 and 4 one | |  
+
+/etc/hosts file : 
+
+```text
+127.0.0.1 console-openshift-console.apps.uluvus.private 
+127.0.0.1 oauth-openshift.apps.uluvus.private
+```
+
+The ssh command add behind that with 
+
+```bash
+sudo <line 4> -L 443:<line 5 ingress>:443
+```
+
+For instance
+
+```bash
+sudo ssh -i id_temp_bastion azureuser@20.58.164.239 -L 443:10.0.3.254:443
+```
+
+
+### Details
 List the credentials
 
 ```bash

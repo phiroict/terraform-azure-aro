@@ -8,7 +8,7 @@ output "aro_create_command" {
 }
 
 output "aro_bastion" {
-  value = "Bastion ip : ssh -i id_temp_bastion ${azurerm_linux_virtual_machine.myterraformvm.admin_username}@${azurerm_linux_virtual_machine.myterraformvm.public_ip_address}"
+  value = "ssh -i id_temp_bastion ${azurerm_linux_virtual_machine.myterraformvm.admin_username}@${azurerm_linux_virtual_machine.myterraformvm.public_ip_address}"
 }
 
 output "aro_credential_list" {
