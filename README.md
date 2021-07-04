@@ -266,7 +266,20 @@ As the goal is to upgrade from Openshift 3 to 4 we need to set up the new os4 en
 
 Based on the parallel design of `Tim Howard` the dependencies for this project are: 
 
-![Dependencies](docs/images/Dependencies_overview.jpg)
+![Dependencies](docs/images/Dependencies_overview.jpg)  
+We reference the dependencies as codes (D-0[1,8]) to use in other diagrams. 
+
+| Code | Description | 
+| --- | --- |
+| D-01 | External CI/CD systems | 
+| D-02 | Version Control Systems | 
+| D-03 | Container registries | 
+| D-04 | Artifact registries| 
+| D-05 | Identity Management Systems | 
+| D-06 | Self Service Portals | 
+| D-07 | Infrastructure operations | 
+| D-08 | 3rd party integrations App and/or services| 
+
 
 Parallel setup: 
 
@@ -277,3 +290,6 @@ From this diagram we need to set up the `v4` section
 High level flow of this setup in Azure and OnPrem: 
 
 ![OnPrem-Azure-Setup](docs/images/ARO_V3_2_V4-architecture-high-level.jpg)
+
+Note that the D01..8 are references to the dependencies in the `BNZ Navigate to Openshift 3-4 Migration workshop` document. 
+
