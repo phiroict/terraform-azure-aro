@@ -259,3 +259,21 @@ Now place these lines in the /etc/hosts file
 ```
 
 So now you can go to `https://console-openshift-console.apps.uluvus.private` to get to the cluster.
+
+# Integration into the system. 
+
+As the goal is to upgrade from Openshift 3 to 4 we need to set up the new os4 environment next to the existing system. 
+
+Based on the parallel design of `Tim Howard` the dependencies for this project are: 
+
+![Dependencies](docs/images/Dependencies_overview.jpg)
+
+Parallel setup: 
+
+![Parellel setup](docs/images/Parellel_project_setup.jpg)
+
+From this diagram we need to set up the `v4` section 
+
+High level flow of this setup in Azure and OnPrem: 
+
+![OnPrem-Azure-Setup](docs/images/ARO_V3_2_V4-architecture-high-level.jpg)
