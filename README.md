@@ -291,5 +291,5 @@ High level flow of this setup in Azure and OnPrem:
 
 ![OnPrem-Azure-Setup](docs/images/ARO_V3_2_V4-architecture-high-level.jpg)
 
-Note that the D01..8 are references to the dependencies in the `BNZ Navigate to Openshift 3-4 Migration workshop` document. 
+Note that the D01..8 are references to the dependencies in the `Navigate to Openshift 3-4 Migration workshop` document. 
 
