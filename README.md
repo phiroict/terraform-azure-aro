@@ -4,6 +4,8 @@ This code will first standup VNET, Bastion and firewall for the Azure Private ne
 This can be used to run ARO install for internal network.
 
 The original project made by `thoward-rh` has been turned into a module so it inspires more reuse. 
+It is then placed into a redhat github account to be shared. 
+
 
 Base setup: 
 
