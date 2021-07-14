@@ -106,7 +106,7 @@ aro_call = "az aro create --resource-group MyResourceGroup --name aro_cluster --
 
 # Installation of ARO
 
-Run the generated set this will return the configuration, for instance:
+Run the generated set this will return the configuration, for instance: (subscriptions masked)
 
 ```json
 {
@@ -118,13 +118,13 @@ Run the generated set this will return the configuration, for instance:
   "clusterProfile": {
     "domain": "uluvus.private",
     "pullSecret": null,
-    "resourceGroupId": "/subscriptions/1d78ad94-cfa6-4756-98a3-7430270e6b39/resourcegroups/aro-b72hpy87",
+    "resourceGroupId": "/subscriptions/1-xxx-9/resourcegroups/aro-b72hpy87",
     "version": "4.6.26"
   },
   "consoleProfile": {
     "url": "https://console-openshift-console.apps.uluvus.private/"
   },
-  "id": "/subscriptions/1d78ad94-cfa6-4756-98a3-7430270e6b39/resourceGroups/MyResourceGroup/providers/Microsoft.RedHatOpenShift/openShiftClusters/aro_cluster",
+  "id": "/subscriptions/1-xxx-9/resourceGroups/MyResourceGroup/providers/Microsoft.RedHatOpenShift/openShiftClusters/aro_cluster",
   "ingressProfiles": [
     {
       "ip": "10.0.3.254",
@@ -134,7 +134,7 @@ Run the generated set this will return the configuration, for instance:
   ],
   "location": "australiaeast",
   "masterProfile": {
-    "subnetId": "/subscriptions/1d78ad94-cfa6-4756-98a3-7430270e6b39/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myControlPlaneSubnet",
+    "subnetId": "/subscriptions/1-xxx-9/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myControlPlaneSubnet",
     "vmSize": "Standard_D8s_v3"
   },
   "name": "aro_cluster",
@@ -145,7 +145,7 @@ Run the generated set this will return the configuration, for instance:
   "provisioningState": "Succeeded",
   "resourceGroup": "MyResourceGroup",
   "servicePrincipalProfile": {
-    "clientId": "2dc97634-cba2-4b7b-b7d3-2782b61c3c40",
+    "clientId": "21-xxx-90",
     "clientSecret": null
   },
   "tags": null,
@@ -155,21 +155,21 @@ Run the generated set this will return the configuration, for instance:
       "count": 1,
       "diskSizeGb": 128,
       "name": "aro-cluster-h5wn8-worker-australiaeast1",
-      "subnetId": "/subscriptions/1d78ad94-cfa6-4756-98a3-7430270e6b39/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myWorkerSubnet",
+      "subnetId": "/subscriptions/11-xxx-99/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myWorkerSubnet",
       "vmSize": "Standard_D4as_v4"
     },
     {
       "count": 1,
       "diskSizeGb": 128,
       "name": "aro-cluster-h5wn8-worker-australiaeast2",
-      "subnetId": "/subscriptions/1d78ad94-cfa6-4756-98a3-7430270e6b39/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myWorkerSubnet",
+      "subnetId": "/subscriptions/1-xxx-9/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myWorkerSubnet",
       "vmSize": "Standard_D4as_v4"
     },
     {
       "count": 1,
       "diskSizeGb": 128,
       "name": "aro-cluster-h5wn8-worker-australiaeast3",
-      "subnetId": "/subscriptions/1d78ad94-cfa6-4756-98a3-7430270e6b39/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myWorkerSubnet",
+      "subnetId": "/subscriptions/1-xxx-9/resourceGroups/MyResourceGroup/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/myWorkerSubnet",
       "vmSize": "Standard_D4as_v4"
     }
   ]
