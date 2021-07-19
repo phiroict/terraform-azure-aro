@@ -16,6 +16,7 @@ post_apply:
 destroy:
 	cd infrastructure && terraform destroy
 all: plan apply post_apply
+destroy_all: delete_aro_cluster destroy
 import_dns:
 	cd infrastructure && terraform import azurerm_private_dns_zone.privatedomain /subscriptions/1d78ad94-cfa6-4756-98a3-7430270e6b39/resourceGroups/myresourcegroup/providers/Microsoft.Network/privateDnsZones/uluvus.private
 bounce: destroy plan apply post_apply
