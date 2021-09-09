@@ -387,3 +387,5 @@ High level flow of this setup in Azure and OnPrem:
 
 Note that the D01..8 are references to the dependencies in the `Navigate to Openshift 3-4 Migration workshop` document. 
 
+# References
+https://docs.microsoft.com/en-us/azure/openshift/
