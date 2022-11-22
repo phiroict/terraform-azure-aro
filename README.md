@@ -1,5 +1,7 @@
 # Terraform Azure ARO setup example project
 
+Latest change : `2022-11-23 `
+
 This terraform project will set up the necessities for creating an ARO cluster: 
 
 This code will first stand up a VNET, Bastion and firewall for the Azure Private network.
